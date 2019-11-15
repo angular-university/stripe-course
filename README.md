@@ -1,11 +1,11 @@
 
-## Serverless Angular with Firebase & AngularFire Course
+## Stripe Payments In Practice
 
-This repository contains the code of the [Serverless Angular with Firebase & AngularFire Course](https://angular-university.io/course/firebase-course).
+This repository contains the code of the [Stripe Payments In Practice](https://angular-university.io/course/stripe-course).
 
 This course repository is updated to Angular v8, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
 
-![Serverless Angular with Firebase & AngularFire Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/serverless-angular-small.png)
+![Stripe Payments In Practice](https://s3-us-west-1.amazonaws.com/angular-university/course-images/serverless-angular-small.png)
 
 
 # Installation pre-requisites
@@ -32,28 +32,26 @@ With the following command the angular-cli will be installed globally in your ma
 
 We can install the master branch using the following commands:
 
-    git clone https://github.com/angular-university/firebase-course.git
+    git clone https://github.com/angular-university/stripe-course.git
     
 This repository is made of several separate npm modules, that are installable separately. For example, to run the au-input module, we can do the following:
     
-    cd firebase-course
+    cd stripe-course
     npm install
-
-Its also possible to install the modules as usual using npm:
-
-    npm install 
-
-NPM 5 or above has the big advantage that if you use it you will be installing the exact same dependencies than I installed in my machine, so you wont run into issues caused by semantic versioning updates.
 
 This should take a couple of minutes. If there are issues, please post the complete error message in the Questions section of the course.
 
 # To Run the Development Backend Server
 
-We can start the sample application backend with the following command:
+For enabling order fulfillment, we need a backend that Stripe can call to notify that a purchase was successful. We can start the backend with the following command:
+
+    cd backend
+
+    npm install
 
     npm run server
 
-This is a small Node REST API server.
+This will start a small Node REST API server.
 
 # To run the Development UI Server
 
@@ -73,15 +71,22 @@ At certain points along the course, you will be asked to checkout other remote b
 
     git branch -a
 
-  The remote branches have their starting in origin, such as for example 1-introduction.
+  The remote branches have their starting in origin, such as for example 1-start.
 
 We can checkout that particular remote branch, by using the following command:
 
-      git checkout -b 1-introduction origin/1-introduction
+      git checkout -b 1-start origin/1-start
 
 It's also possible to download a ZIP file for a given branch, using the branch dropdown of this page on the top left, and then selecting the Clone or Download / Download as ZIP button.
 
 # Other Courses
+
+# NgRx (with NgRx Data) - The Complete Guide
+
+If you are looking for the [Ngrx (with NgRx Data) - The Complete Guide](https://angular-university.io/course/ngrx-course), the repo with the full code can be found here:
+
+![Ngrx (with NgRx Data) - The Complete Guide](https://angular-university.s3-us-west-1.amazonaws.com/course-images/ngrx-v2.png)
+
 
 # Angular Core Deep Dive Course
 
@@ -95,13 +100,23 @@ If you are looking for the [RxJs In Practice](https://angular-university.io/cour
 
 ![RxJs In Practice Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/rxjs-in-practice-course.png)
 
+# NestJs In Practice (with MongoDB)
 
-# NgRx In Depth
+If you are looking for the [NestJs In Practice Course](https://angular-university.io/course/nestjs-course), the repo with the full code can be found here:
 
-If you are looking for the [NgRx In Depth](https://angular-university.io/course/angular-ngrx-course), the repo with the full code can be found here:
+![NestJs In Practice Course](https://angular-university.s3-us-west-1.amazonaws.com/course-images/nestjs-v2.png)
 
-![Angular Ngrx Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-ngrx-course.png)
+# Angular Testing Course
 
+If you are looking for the [Angular Testing Course](https://angular-university.io/course/angular-testing-course), the repo with the full code can be found here:
+
+![Angular Testing Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-testing-small.png)
+
+# Serverless Angular with Firebase Course
+
+If you are looking for the [Serverless Angular with Firebase Course](https://angular-university.io/course/firebase-course), the repo with the full code can be found here:
+
+![Serverless Angular with Firebase Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/serverless-angular-small.png)
 
 # Angular Universal Course
 
@@ -150,4 +165,5 @@ If you are looking for the Complete Typescript 2 Course - Build a REST API, the 
 [Github repo for this course](https://github.com/angular-university/complete-typescript-course)
 
 ![Complete Typescript Course](https://angular-academy.s3.amazonaws.com/thumbnails/typescript-2-small.png)
+
 
