@@ -23,22 +23,8 @@ export class CoursesCardListComponent implements OnInit {
 
     }
 
-    editCourse(course:Course) {
+    purchaseCourse(course:Course) {
 
-        const dialogConfig = new MatDialogConfig();
-
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-
-        dialogConfig.data = course;
-
-        this.dialog.open(CourseDialogComponent, dialogConfig)
-            .afterClosed()
-            .subscribe(val => {
-                if (val) {
-                    this.courseEdited.emit();
-                }
-            });
 
     }
 
