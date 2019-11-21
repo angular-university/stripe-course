@@ -6,7 +6,7 @@ export const COURSES: any = {
       description: 'Stripe Payments In Practice',
       longDescription: 'Build your own ecommerce store & membership website with Firebase, Stripe and Express'
     },
-    iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/serverless-angular-small.png',
+    iconUrl: 'https://angular-university.s3-us-west-1.amazonaws.com/course-images/stripe-course.jpg',
     lessonsCount: 10,
     categories: ['BEGINNER'],
     seqNo: 0,
