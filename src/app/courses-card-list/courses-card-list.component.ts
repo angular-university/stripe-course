@@ -7,6 +7,8 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {CheckoutService} from '../services/checkout.service';
 
+declare const Stripe;
+
 @Component({
   selector: 'courses-card-list',
   templateUrl: './courses-card-list.component.html',
@@ -45,8 +47,18 @@ export class CoursesCardListComponent implements OnInit {
       return;
     }
 
-    this.checkout.createBuyCourseCheckoutSession(course.id)
-      .subscribe();
+    this.checkout.startPurchaseCourseCheckoutSession(course.id)
+      .subscribe(
+        checkoutSession => {
+
+          const stripe = Stripe(checkoutSession.stripePublicKey);
+
+          stripe.redirectToCheckout({
+            sessionId: checkoutSession.stripeCheckoutSessionId
+          });
+
+        }
+      );
 
   }
 

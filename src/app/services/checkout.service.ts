@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {CheckoutSession} from '../model/checkout-session.model';
 
 
 @Injectable({
@@ -11,7 +13,7 @@ export class CheckoutService {
 
   }
 
-  createBuyCourseCheckoutSession(courseId:string) {
+  startPurchaseCourseCheckoutSession(courseId:string): Observable<CheckoutSession> {
 
     const protocol = window.location.protocol,
       hostName = window.location.hostname,
@@ -25,7 +27,7 @@ export class CheckoutService {
 
     callbackUrl += `/stripe-checkout`;
 
-    return this.http.post('/api/checkout', {courseId, callbackUrl});
+    return this.http.post<CheckoutSession>('/api/checkout', {courseId, callbackUrl});
   }
 
 

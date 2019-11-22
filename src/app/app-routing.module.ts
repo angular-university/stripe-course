@@ -5,6 +5,7 @@ import {AboutComponent} from "./about/about.component";
 import {CourseComponent} from "./course/course.component";
 import {CourseResolver} from "./services/course.resolver";
 import {LoginComponent} from './login/login.component';
+import {StripeCheckoutComponent} from './stripe-checkout/stripe-checkout.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
         resolve: {
             course: CourseResolver
         }
+    },
+    {
+      path:"stripe-checkout",
+      component: StripeCheckoutComponent
     },
     {
         path: "**",

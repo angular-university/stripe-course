@@ -38,6 +38,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {LoginComponent} from './login/login.component';
 import {AuthInterceptor} from './services/auth.interceptor';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { StripeCheckoutComponent } from './stripe-checkout/stripe-checkout.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
     CourseComponent,
     CoursesCardListComponent,
     CourseDialogComponent,
-    LoginComponent
+    LoginComponent,
+    StripeCheckoutComponent
   ],
   imports: [
     BrowserModule,

@@ -56,7 +56,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     });
 
     const stripeSession = {
-      stripeSessionId:session.id,
+      stripeCheckoutSessionId:session.id,
       stripePublicKey: STRIPE_PUBLIC_KEY
     };
 
