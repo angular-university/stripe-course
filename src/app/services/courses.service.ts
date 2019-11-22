@@ -12,14 +12,13 @@ import OrderByDirection = firebase.firestore.OrderByDirection;
 })
 export class CoursesService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) {
 
 
+  }
 
     saveCourse(courseId:string, changes: Partial<Course>): Observable<any> {
-
       return from(this.db.doc(`courses/${courseId}`).update(changes));
-      
     }  
 
     loadAllCourses(): Observable<Course[]> {

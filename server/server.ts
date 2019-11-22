@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 import * as express from 'express';
 import {Application} from "express";
 import {createCheckoutSession} from './checkout.route';
@@ -9,12 +12,7 @@ const bodyParser = require('body-parser');
 const app: Application = express();
 
 
-//app.use(bodyParser.json());
-
-
 app.route('/api/checkout').post(bodyParser.json(), createCheckoutSession);
-
-
 
 
 

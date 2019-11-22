@@ -10,7 +10,8 @@ export const COURSES: any = {
     lessonsCount: 10,
     categories: ['BEGINNER'],
     seqNo: 0,
-    url: 'stripe-course'
+    url: 'stripe-course',
+    price: 50
   },
 
   4: {

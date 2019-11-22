@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from '../model/course';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {CoursesService} from '../services/courses.service';
 
 

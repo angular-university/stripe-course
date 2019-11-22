@@ -3,14 +3,28 @@
   "version": "1.0.0",
   "description": "Backend for the Stripe Payments in Practice Course",
   "scripts": {
-    "server": "ts-node -P ./server.tsconfig.json ./server.ts"
+    "clean": "rimraf dist",
+    "copy": "copyfiles service-accounts/*.json dist",
+    "start:local": "tsc-watch -P ./server.tsconfig.json --onSuccess \"node dist/server.js\"",
+    "build": "tsc -P ./server.tsconfig.json",
+    "start:prod": "node dist/server.js",
+    "start:debug": "node --inspect-brk dist/server.js",
+    "debug": "run-s clean build copy start:debug",
+    "server": "run-s clean copy start:local"
   },
   "dependencies": {
+    "@google-cloud/firestore": "^2.6.0",
     "@types/express": "^4.17.2",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "firebase-admin": "^8.8.0",
     "stripe": "^7.13.0"
   },
   "devDependencies": {
-    "ts-node": "^8.5.2"
+    "copyfiles": "^2.1.1",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.5.2",
+    "tsc-watch": "^4.0.0"
   }
 }

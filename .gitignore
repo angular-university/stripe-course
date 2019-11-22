@@ -2,6 +2,9 @@
 
 # compiled output
 /dist
+/server/dist
+/server/node_modules
+/server/service-accounts
 /tmp
 /out-tsc
 

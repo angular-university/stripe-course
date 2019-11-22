@@ -7,14 +7,27 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CheckoutService {
 
-
   constructor(private http: HttpClient) {
 
   }
 
-
   createBuyCourseCheckoutSession(courseId:string) {
-    return this.http.post('/api/checkout', {courseId});
+
+    const protocol = window.location.protocol,
+      hostName = window.location.hostname,
+      port = window.location.port;
+
+    let callbackUrl = `${protocol}//${hostName}`;
+
+    if (port) {
+      callbackUrl+= `:${port}`;
+    }
+
+    callbackUrl += `/stripe-checkout`;
+
+    return this.http.post('/api/checkout', {courseId, callbackUrl});
   }
+
+
 
 }
