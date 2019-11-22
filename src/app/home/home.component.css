@@ -9,3 +9,16 @@
 .page-title {
   font-family: "Roboto";
 }
+
+
+.top-toolbar {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.subscribe-btn {
+  margin-left: 15px;
+}
