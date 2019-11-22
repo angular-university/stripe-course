@@ -13,12 +13,20 @@ export async function createCheckoutSession(req: Request, res: Response) {
   try {
 
     const courseId = req.body.courseId,
+          userId = req["uid"],
           callbackUrl = req.body.callbackUrl;
 
     console.log("Purchasing course with id: ", courseId);
 
     // get the course from the database
     const course = await getDocData(`courses/${courseId}`);
+
+    if (!userId) {
+      const message = 'User must be authenticated.';
+      console.log(message);
+      res.status(500).json({message});
+      return;
+    }
 
     if (!course) {
       const message = 'Could not find course with courseId ' + courseId;
@@ -51,7 +59,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     // save the ongoing purchase session
     await purchaseSession.set({
       courseId,
-      //userId,
+      userId,
       status: 'ongoing'
     });
 

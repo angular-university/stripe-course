@@ -39,6 +39,8 @@ import {LoginComponent} from './login/login.component';
 import {AuthInterceptor} from './services/auth.interceptor';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { StripeCheckoutComponent } from './stripe-checkout/stripe-checkout.component';
+import {IdTokenService} from './services/id-token.service';
+
 
 @NgModule({
   declarations: [
@@ -77,11 +79,11 @@ import { StripeCheckoutComponent } from './stripe-checkout/stripe-checkout.compo
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
     HttpClientModule
   ],
   providers: [
     CourseResolver,
+    IdTokenService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
