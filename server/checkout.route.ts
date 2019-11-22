@@ -3,9 +3,8 @@
 import {Request, Response} from "express";
 import {getDocData} from './db-utils';
 import {db} from './init-db';
-import {STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY} from './env';
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 
 export async function createCheckoutSession(req: Request, res: Response) {
@@ -19,7 +18,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     console.log("Purchasing course with id: ", courseId);
 
     // get the course from the database
-    const course = await getDocData(`courses/${courseId}`);
+    const courseData = await getDocData(`courses/${courseId}`);
 
     if (!userId) {
       const message = 'User must be authenticated.';
@@ -28,7 +27,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
       return;
     }
 
-    if (!course) {
+    if (!courseData) {
       const message = 'Could not find course with courseId ' + courseId;
       console.log(message);
       res.status(500).json({message});
@@ -38,7 +37,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     // Add a new document with a generated id.
     const purchaseSession = db.collection("purchaseSessions").doc();
 
-    const sessionConfig = setupPurchaseCourseSession(callbackUrl, purchaseSession.id, course);
+    const sessionConfig = setupPurchaseCourseSession(callbackUrl, purchaseSession.id, courseId, courseData);
 
     console.log(sessionConfig);
 
@@ -54,7 +53,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
 
     const stripeSession = {
       stripeCheckoutSessionId:session.id,
-      stripePublicKey: STRIPE_PUBLIC_KEY
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY
     };
 
     res.status(200).json(stripeSession);
@@ -76,17 +75,17 @@ function setupBaseSessionConfig(callbackUrl:string, purchaseSessionId:string) {
 }
 
 
-function setupPurchaseCourseSession(callbackUrl:string, purchaseSessionId:string, course) {
+function setupPurchaseCourseSession(callbackUrl:string, purchaseSessionId:string, courseId:string,  courseData) {
 
   const config:any = setupBaseSessionConfig(callbackUrl, purchaseSessionId);
 
-  config.success_url += `&courseId=${course.id}`;
+  config.success_url += `&courseId=${courseData.id}`;
 
   config.line_items = [{
     currency: 'usd',
-    amount: course.price * 100,
+    amount: courseData.price * 100,
     quantity: 1,
-    name: course.titles.description
+    name: courseData.titles.description
   }];
 
   return config;
