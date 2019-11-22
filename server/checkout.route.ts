@@ -38,18 +38,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     // Add a new document with a generated id.
     const purchaseSession = db.collection("purchaseSessions").doc();
 
-    const sessionConfig = {
-      success_url: `${callbackUrl}/?purchaseResult=success&ongoingPurchaseSessionId=${purchaseSession.id}&courseId=${courseId}`,
-      cancel_url: `${callbackUrl}?purchaseResult=failed`,
-      payment_method_types: ['card'],
-      client_reference_id: purchaseSession.id,
-      line_items: [{
-        currency: 'usd',
-        amount: course.price * 100,
-        quantity: 1,
-        name: course.titles.description
-      }]
-    };
+    const sessionConfig = setupPurchaseCourseSession(callbackUrl, purchaseSession.id, course);
 
     console.log(sessionConfig);
 
@@ -75,5 +64,32 @@ export async function createCheckoutSession(req: Request, res: Response) {
     res.status(500).json({error});
   }
 
+}
+
+function setupBaseSessionConfig(callbackUrl:string, purchaseSessionId:string) {
+  return {
+    success_url: `${callbackUrl}/?purchaseResult=success&ongoingPurchaseSessionId=${purchaseSessionId}`,
+      cancel_url: `${callbackUrl}?purchaseResult=failed`,
+    payment_method_types: ['card'],
+    client_reference_id: purchaseSessionId
+  }
+}
+
+
+function setupPurchaseCourseSession(callbackUrl:string, purchaseSessionId:string, course) {
+
+  const config:any = setupBaseSessionConfig(callbackUrl, purchaseSessionId);
+
+  config.success_url += `&courseId=${course.id}`;
+
+  config.line_items = [{
+    currency: 'usd',
+    amount: course.price * 100,
+    quantity: 1,
+    name: course.titles.description
+  }];
+
+  return config;
 
 }
+
