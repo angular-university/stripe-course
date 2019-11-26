@@ -3,6 +3,8 @@
 import {Request, Response} from "express";
 import {getDocData} from './db-utils';
 import {db} from './init-db';
+import {Timestamp} from '@google-cloud/firestore';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
@@ -48,7 +50,8 @@ export async function createCheckoutSession(req: Request, res: Response) {
     await purchaseSession.set({
       courseId,
       userId,
-      status: 'ongoing'
+      status: 'ongoing',
+      created: Timestamp.now()
     });
 
     const stripeSession = {
