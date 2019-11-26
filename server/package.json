@@ -5,10 +5,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "copy": "copyfiles service-accounts/*.json dist",
-    "start:local": "tsc-watch -P ./server.tsconfig.json --onSuccess \"node dist/server.js\"",
+    "start:local": "tsc-watch -P ./server.tsconfig.json --onSuccess \"node dist/main.js\"",
     "build": "tsc -P ./server.tsconfig.json",
-    "start:prod": "node dist/server.js",
-    "start:debug": "node --inspect-brk dist/server.js",
+    "start:prod": "node dist/main.js",
+    "start:debug": "node --inspect-brk dist/main.js",
     "debug": "run-s clean build copy start:debug",
     "server": "run-s clean copy start:local"
   },
