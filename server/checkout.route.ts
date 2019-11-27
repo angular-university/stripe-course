@@ -49,7 +49,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
     // Add a new document with a generated id.
     const purchaseSession = db.collection("purchaseSessions").doc();
 
-    const sessionConfig = setupPurchaseCourseSession(callbackUrl, purchaseSession.id, courseId, courseData);
+    const sessionConfig = await setupPurchaseCourseSession(userId, callbackUrl, purchaseSession.id, courseId, courseData);
 
     console.log(sessionConfig);
 
@@ -88,9 +88,15 @@ function setupBaseSessionConfig(callbackUrl:string, purchaseSessionId:string) {
 }
 
 
-function setupPurchaseCourseSession(callbackUrl:string, purchaseSessionId:string, courseId:string,  courseData) {
+async function setupPurchaseCourseSession(userId:string, callbackUrl:string, purchaseSessionId:string, courseId:string,  courseData) {
 
   const config:any = setupBaseSessionConfig(callbackUrl, purchaseSessionId);
+
+  const user = await getDocData(`users/${userId}`);
+
+  if (user && user.stripeCustomerId) {
+    config.customer = user.stripeCustomerId;
+  }
 
   config.line_items = [{
     currency: 'usd',
