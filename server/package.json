@@ -10,7 +10,8 @@
     "start:prod": "node dist/main.js",
     "start:debug": "node --inspect-brk dist/main.js",
     "debug": "run-s clean build copy start:debug",
-    "server": "run-s clean copy start:local"
+    "server": "run-s clean copy start:local",
+    "webhooks:listen": "stripe listen --forward-to localhost:9000/stripe-webhooks"
   },
   "dependencies": {
     "@google-cloud/firestore": "^2.6.0",

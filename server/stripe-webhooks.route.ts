@@ -59,7 +59,7 @@ async function fulfillCoursePurchase(purchaseSessionId: string, userId: string, 
 
   const userPurchasesRef = db.doc(`userPurchases/${userId}`);
 
-  batch.set(userPurchasesRef, {stripeCustomerId}, {merge:true});
+  batch.set(userPurchasesRef, {stripeCustomerId}, {});
 
   const userCourseOwnedRef = db.doc(`userPurchases/${userId}/coursesOwned/${courseId}`);
 
