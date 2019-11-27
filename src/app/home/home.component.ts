@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
     advancedCourses$: Observable<Course[]>;
 
-    subscriptionOngoing = false;
+    processingOngoing = false;
 
     constructor(
       private coursesService: CoursesService,
@@ -49,19 +49,23 @@ export class HomeComponent implements OnInit {
 
   subscribeToPlan() {
 
-      this.subscriptionOngoing = true;
+      this.processingOngoing = true;
 
     this.checkout.startPurchaseSubscriptionCheckoutSession("monthly")
       .subscribe(
         session => this.checkout.redirectToCheckout(session)
         , err => {
           console.log("Error creating checkout session", err);
-          this.subscriptionOngoing = false;
+          this.processingOngoing = false;
         });
 
 
 
 
+
+  }
+
+  cancelPlan() {
 
   }
 }

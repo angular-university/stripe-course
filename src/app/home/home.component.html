@@ -3,11 +3,14 @@
 
     <div class="top-toolbar">
 
-      <h3 class="page-title">All Courses</h3>
-
-      <button class="subscribe-btn" mat-raised-button color="accent"
-              (click)="subscribeToPlan()" [disabled]="subscriptionOngoing">
+      <button class="toolbar-btn" mat-raised-button color="accent"
+              (click)="subscribeToPlan()" [disabled]="processingOngoing">
         Subscribe
+      </button>
+
+      <button class="toolbar-btn" mat-raised-button
+              (click)="cancelPlan()" [disabled]="processingOngoing">
+        Cancel
       </button>
 
     </div>
