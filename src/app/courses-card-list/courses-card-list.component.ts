@@ -60,9 +60,11 @@ export class CoursesCardListComponent implements OnInit {
           stripe.redirectToCheckout({
             sessionId: checkoutSession.stripeCheckoutSessionId
           });
-
         }
-      );
+      , err => {
+          console.log("Error creating checkout session", err);
+          this.purchaseStarted = false;
+        });
 
   }
 
