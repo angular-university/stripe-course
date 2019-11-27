@@ -36,6 +36,16 @@ export async function createCheckoutSession(req: Request, res: Response) {
       return;
     }
 
+    if (courseId) {
+      const snap = await db.doc(`users/${userId}/coursesOwned/${courseId}`).get();
+      if (snap.exists) {
+        const message = 'User already owns course with id ' + courseId;
+        console.log(message);
+        res.status(500).json({message});
+        return;
+      }
+    }
+
     // Add a new document with a generated id.
     const purchaseSession = db.collection("purchaseSessions").doc();
 

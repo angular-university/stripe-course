@@ -61,7 +61,7 @@ async function fulfillCoursePurchase(purchaseSessionId: string, userId: string, 
 
   batch.set(userRef, {stripeCustomerId}, {}, {merge:true});
 
-  const userCourseOwnedRef = db.doc(`user/${userId}/coursesOwned/${courseId}`);
+  const userCourseOwnedRef = db.doc(`users/${userId}/coursesOwned/${courseId}`);
 
   batch.set(userCourseOwnedRef, {owned:true});
 
