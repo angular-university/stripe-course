@@ -7,8 +7,6 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {CheckoutService} from '../services/checkout.service';
 
-declare const Stripe;
-
 @Component({
   selector: 'courses-card-list',
   templateUrl: './courses-card-list.component.html',
@@ -45,7 +43,7 @@ export class CoursesCardListComponent implements OnInit {
   purchaseCourse(course: Course, isLoggedIn: boolean) {
 
     if (!isLoggedIn) {
-      alert("Please login first");
+      alert('Please login first');
       return;
     }
 
@@ -53,16 +51,9 @@ export class CoursesCardListComponent implements OnInit {
 
     this.checkout.startPurchaseCourseCheckoutSession(course.id)
       .subscribe(
-        checkoutSession => {
-
-          const stripe = Stripe(checkoutSession.stripePublicKey);
-
-          stripe.redirectToCheckout({
-            sessionId: checkoutSession.stripeCheckoutSessionId
-          });
-        }
-      , err => {
-          console.log("Error creating checkout session", err);
+        session => this.checkout.redirectToCheckout(session),
+        err => {
+          console.log('Error creating checkout session', err);
           this.purchaseStarted = false;
         });
 

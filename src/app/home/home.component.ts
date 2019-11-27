@@ -3,6 +3,7 @@ import {Course} from '../model/course';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {CoursesService} from '../services/courses.service';
+import {CheckoutService} from '../services/checkout.service';
 
 
 @Component({
@@ -18,7 +19,11 @@ export class HomeComponent implements OnInit {
 
     advancedCourses$: Observable<Course[]>;
 
-    constructor(private coursesService: CoursesService) {
+    subscriptionOngoing = false;
+
+    constructor(
+      private coursesService: CoursesService,
+      private checkout: CheckoutService) {
 
     }
 
@@ -42,6 +47,21 @@ export class HomeComponent implements OnInit {
     }
 
 
+  subscribeToPlan() {
+
+      this.subscriptionOngoing = true;
+
+    this.checkout.startPurchaseSubscriptionCheckoutSession("monthly")
+      .subscribe(
+        session => this.checkout.redirectToCheckout(session)
+        , err => {
+          console.log("Error creating checkout session", err);
+          this.subscriptionOngoing = false;
+        });
 
 
+
+
+
+  }
 }

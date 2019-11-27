@@ -5,7 +5,10 @@
 
       <h3 class="page-title">All Courses</h3>
 
-      <button class="subscribe-btn" mat-raised-button color="accent">Subscribe</button>
+      <button class="subscribe-btn" mat-raised-button color="accent"
+              (click)="subscribeToPlan()" [disabled]="subscriptionOngoing">
+        Subscribe
+      </button>
 
     </div>
 
