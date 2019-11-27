@@ -39,12 +39,18 @@ async function onCheckoutSessionCompleted(session) {
   const purchaseSession = await getDocData(`purchaseSessions/${purchaseSessionId}`);
 
   const stripeCustomerId = session.customer,
+    stripeSubscriptionId = session.subscription,
     userId = purchaseSession.userId,
-    courseId = purchaseSession.courseId;
+    courseId = purchaseSession.courseId,
+    pricingPlanId = purchaseSession.pricingPlanId;
 
   if (courseId) {
     await fulfillCoursePurchase(purchaseSessionId, userId, stripeCustomerId, courseId);
   }
+  else if (pricingPlanId) {
+    await fulfillsubscriptionPurchase(purchaseSessionId, userId, stripeCustomerId, stripeSubscriptionId, pricingPlanId);
+  }
+
 
 }
 
@@ -64,6 +70,24 @@ async function fulfillCoursePurchase(purchaseSessionId: string, userId: string, 
   const userCourseOwnedRef = db.doc(`users/${userId}/coursesOwned/${courseId}`);
 
   batch.set(userCourseOwnedRef, {owned:true});
+
+  return batch.commit();
+
+}
+
+async function fulfillsubscriptionPurchase(purchaseSessionId: string, userId: string,
+                                           stripeCustomerId: string,
+                                           stripeSubscriptionId:string, pricingPlanId: string) {
+
+  const batch = db.batch();
+
+  const purchaseSessionRef = db.doc(`purchaseSessions/${purchaseSessionId}`);
+
+  batch.update(purchaseSessionRef, {status: 'completed'});
+
+  const userRef = db.doc(`users/${userId}`);
+
+  batch.set(userRef, {stripeCustomerId, stripeSubscriptionId, pricingPlanId}, {}, {merge:true});
 
   return batch.commit();
 
