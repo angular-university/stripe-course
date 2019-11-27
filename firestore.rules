@@ -10,11 +10,15 @@ service cloud.firestore {
       return exists( /databases/$(database)/documents/users/$(userId)/coursesOwned/$(courseId));
      }
 
+     function isSubscriber(userId) {
+      return "pricingPlanId" in get( /databases/$(database)/documents/users/$(userId)).data;
+     }
+
      match /courses/{courseId} {
      	allow read: if true;
 
       match /lessons/{lessonId} {
-       allow read: if userOwnsCourse(request.auth.uid, courseId);
+       allow read: if userOwnsCourse(request.auth.uid, courseId) || isSubscriber(request.auth.uid);
       }
 
      }
