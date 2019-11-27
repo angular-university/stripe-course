@@ -24,6 +24,8 @@ export class CoursesCardListComponent implements OnInit {
 
   isLoggedIn: boolean;
 
+  purchaseStarted = false;
+
   constructor(
     private dialog: MatDialog,
     private afAuth: AngularFireAuth,
@@ -46,6 +48,8 @@ export class CoursesCardListComponent implements OnInit {
       alert("Please login first");
       return;
     }
+
+    this.purchaseStarted = true;
 
     this.checkout.startPurchaseCourseCheckoutSession(course.id)
       .subscribe(

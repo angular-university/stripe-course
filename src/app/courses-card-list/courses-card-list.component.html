@@ -21,7 +21,7 @@
         </button>
 
         <button mat-button class="mat-raised-button mat-accent"
-                (click)="purchaseCourse(course, (isLoggedIn))">
+                (click)="purchaseCourse(course, (isLoggedIn))" [disabled]="purchaseStarted">
             BUY COURSE
         </button>
 
