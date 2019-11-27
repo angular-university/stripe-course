@@ -28,6 +28,10 @@ service cloud.firestore {
 
      }
 
+     match /purchaseSessions/{purchaseId} {
+        allow read: if resource.data.userId == request.auth.uid;
+     }
+
   }
 
 }

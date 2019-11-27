@@ -26,10 +26,19 @@ export class StripeCheckoutComponent implements OnInit {
 
     if (result == "success") {
 
+      const ongoingPurchaseSessionId = this.route.snapshot.queryParamMap.get('ongoingPurchaseSessionId');
+
+      this.checkout.waitForPurchaseToComplete(ongoingPurchaseSessionId)
+        .subscribe(
+          () => {
+            this.waiting = false;
+            this.message = "Purchase SUCCESSFUL, redirecting...";
+            setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
+          });
     }
     else {
       this.waiting = false;
-      this.message = "Purchase canceled or failed, redirecting...";
+      this.message = "Purchase CANCELED or FAILED, redirecting...";
       setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
     }
 

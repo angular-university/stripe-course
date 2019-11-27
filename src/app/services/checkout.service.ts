@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CheckoutSession} from '../model/checkout-session.model';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {filter, first} from 'rxjs/operators';
 
 
 @Injectable({
@@ -9,7 +11,9 @@ import {CheckoutSession} from '../model/checkout-session.model';
 })
 export class CheckoutService {
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private afs: AngularFirestore) {
 
   }
 
@@ -31,5 +35,12 @@ export class CheckoutService {
   }
 
 
-
+  waitForPurchaseToComplete(ongoingPurchaseSessionId: string): Observable<any> {
+    return this.afs.doc<any>(`purchaseSessions/${ongoingPurchaseSessionId}`)
+      .valueChanges()
+      .pipe(
+        filter(purchase => purchase.status == "completed"),
+        first()
+      )
+  }
 }
