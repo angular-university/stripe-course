@@ -7,7 +7,7 @@ service cloud.firestore {
      }
 
      function userOwnsCourse(userId, courseId) {
-      return exists( /databases/$(database)/documents/userPurchases/$(userId)/coursesOwned/$(courseId));
+      return exists( /databases/$(database)/documents/user/$(userId)/coursesOwned/$(courseId));
      }
 
      match /courses/{courseId} {
@@ -19,7 +19,7 @@ service cloud.firestore {
 
      }
 
-     match /userPurchases/{userId} {
+     match /user/{userId} {
        allow read: if isUserWithId(userId);
 
        match /coursesOwned/{courseId} {

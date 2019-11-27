@@ -82,8 +82,6 @@ function setupPurchaseCourseSession(callbackUrl:string, purchaseSessionId:string
 
   const config:any = setupBaseSessionConfig(callbackUrl, purchaseSessionId);
 
-  config.success_url += `&courseId=${courseData.id}`;
-
   config.line_items = [{
     currency: 'usd',
     amount: courseData.price * 100,

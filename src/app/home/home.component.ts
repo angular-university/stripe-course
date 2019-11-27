@@ -5,6 +5,13 @@ import {map} from 'rxjs/operators';
 import {CoursesService} from '../services/courses.service';
 
 
+interface HomeData {
+  beginnerCourses: Course[];
+  advancedCourses: Course[];
+  userOwnedCourseIds: string[];
+}
+
+
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -29,6 +36,7 @@ export class HomeComponent implements OnInit {
     }
 
     reloadCourses() {
+
         this.courses$ = this.coursesService.loadAllCourses();
 
         this.beginnersCourses$ = this.courses$.pipe(

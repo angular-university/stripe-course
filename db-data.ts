@@ -25,7 +25,8 @@ export const COURSES: any = {
     lessonsCount: 10,
     seqNo: 1,
     url: 'ngrx-course',
-    promo: false
+    promo: false,
+    price: 50
   },
 
   14: {
@@ -39,7 +40,8 @@ export const COURSES: any = {
     lessonsCount: 10,
     seqNo: 2,
     url: 'nestjs-course',
-    promo: false
+    promo: false,
+    price: 50
   },
 
   12: {
@@ -53,7 +55,8 @@ export const COURSES: any = {
     seqNo: 3,
     url: 'angular-testing-course',
     lessonsCount: 10,
-    promo: false
+    promo: false,
+    price: 50
   },
 
 
@@ -67,7 +70,8 @@ export const COURSES: any = {
     lessonsCount: 10,
     categories: ['BEGINNER'],
     seqNo: 4,
-    url: 'serverless-angular'
+    url: 'serverless-angular',
+    price: 50
   },
 
   2: {
@@ -80,7 +84,8 @@ export const COURSES: any = {
     lessonsCount: 10,
     categories: ['BEGINNER'],
     seqNo: 5,
-    url: 'angular-core-course'
+    url: 'angular-core-course',
+    price: 50
   },
 
   3: {
@@ -94,7 +99,8 @@ export const COURSES: any = {
     categories: ['BEGINNER'],
     lessonsCount: 10,
     seqNo: 6,
-    url: 'rxjs-course'
+    url: 'rxjs-course',
+    price: 50
   },
 
   5: {
@@ -108,7 +114,8 @@ export const COURSES: any = {
     categories: ['BEGINNER'],
     lessonsCount: 10,
     seqNo: 7,
-    url: 'angular-for-beginners'
+    url: 'angular-for-beginners',
+    price: 50
   },
 
   6: {
@@ -122,7 +129,8 @@ export const COURSES: any = {
     categories: ['ADVANCED'],
     lessonsCount: 11,
     seqNo: 8,
-    url: 'angular-security-course'
+    url: 'angular-security-course',
+    price: 50
   },
 
   7: {
@@ -136,7 +144,8 @@ export const COURSES: any = {
     categories: ['ADVANCED'],
     lessonsCount: 8,
     seqNo: 9,
-    url: 'angular-pwa-course'
+    url: 'angular-pwa-course',
+    price: 50
   },
 
   8: {
@@ -149,7 +158,8 @@ export const COURSES: any = {
     courseListIcon: 'https://angular-academy.s3.amazonaws.com/thumbnails/angular-advanced-lesson-icon.png',
     categories: ['INTERMEDIATE', 'ADVANCED'],
     seqNo: 10,
-    url: 'angular-advanced-course'
+    url: 'angular-advanced-course',
+    price: 50
   },
 
   9: {
@@ -162,7 +172,8 @@ export const COURSES: any = {
     courseListIcon: 'https://angular-academy.s3.amazonaws.com/thumbnails/typescript-2-lesson.png',
     categories: ['BEGINNER'],
     seqNo: 11,
-    url: 'typescript-course'
+    url: 'typescript-course',
+    price: 50
   },
 
   10: {
@@ -175,7 +186,8 @@ export const COURSES: any = {
     courseListIcon: 'https://angular-academy.s3.amazonaws.com/course-logos/observables_rxjs.png',
     categories: ['BEGINNER'],
     seqNo: 12,
-    url: 'rxjs-patterns-course'
+    url: 'rxjs-patterns-course',
+    price: 50
   },
 
   11: {
@@ -187,7 +199,8 @@ export const COURSES: any = {
     iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/material_design.png',
     categories: ['BEGINNER'],
     seqNo: 13,
-    url: 'angular-material-course'
+    url: 'angular-material-course',
+    price: 50
   }
 
 };
