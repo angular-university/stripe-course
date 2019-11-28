@@ -65,7 +65,4 @@ export class HomeComponent implements OnInit {
 
   }
 
-  cancelPlan() {
-
-  }
 }
