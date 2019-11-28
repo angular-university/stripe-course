@@ -44,3 +44,4 @@ testem.log
 .DS_Store
 Thumbs.db
 tmp.json
+.firebase

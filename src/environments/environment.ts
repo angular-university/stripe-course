@@ -9,5 +9,10 @@ export const environment = {
     storageBucket: "stripe-course-63d30.appspot.com",
     messagingSenderId: "211570590869",
     appId: "1:211570590869:web:71af776fe9b146c89a079c"
+  },
+  api: {
+    baseUrl: ""
   }
 };
+
+

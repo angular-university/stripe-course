@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {CheckoutSession} from '../model/checkout-session.model';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {filter, first} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+
 
 declare const Stripe;
 
@@ -20,14 +22,14 @@ export class CheckoutService {
   }
 
   startPurchaseCourseCheckoutSession(courseId:string): Observable<CheckoutSession> {
-    return this.http.post<CheckoutSession>('/api/checkout', {
+    return this.http.post<CheckoutSession>(`${environment.api.baseUrl}/api/checkout`, {
       courseId,
       callbackUrl: this.buildCallbackUrl()
     });
   }
 
   startPurchaseSubscriptionCheckoutSession(pricingPlanId:string): Observable<CheckoutSession> {
-    return this.http.post<CheckoutSession>('/api/checkout', {
+    return this.http.post<CheckoutSession>(`${environment.api.baseUrl}/api/checkout`, {
       pricingPlanId,
       callbackUrl: this.buildCallbackUrl()
     });
