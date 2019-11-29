@@ -1,7 +1,7 @@
 
 ## Stripe Payments In Practice
 
-This repository contains the code of the [Stripe Payments In Practice](https://angular-university.io/course/stripe-course).
+This repository contains the code of the [Stripe Payments In Practice Course](https://angular-university.io/course/stripe-course).
 
 ![Stripe Payments In Practice](https://angular-university.s3-us-west-1.amazonaws.com/course-images/stripe-course.jpg)
 
