@@ -5,7 +5,7 @@ This repository contains the code of the [Stripe Payments In Practice](https://a
 
 This course repository is updated to Angular v8, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
 
-![Stripe Payments In Practice](https://s3-us-west-1.amazonaws.com/angular-university/course-images/serverless-angular-small.png)
+![Stripe Payments In Practice](https://angular-university.s3-us-west-1.amazonaws.com/course-images/stripe-course.jpg)
 
 
 # Installation pre-requisites
