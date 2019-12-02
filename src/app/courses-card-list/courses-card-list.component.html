@@ -21,8 +21,9 @@
         </button>
 
         <button mat-button class="mat-raised-button mat-accent"
-                (click)="purchaseCourse(course, (isLoggedIn))" [disabled]="purchaseStarted">
-            BUY COURSE
+                (click)="purchaseCourse(course, isLoggedIn)"
+                [disabled]="purchaseStarted">
+            BUY COURSE ${{course.price}}
         </button>
 
     </mat-card-actions>

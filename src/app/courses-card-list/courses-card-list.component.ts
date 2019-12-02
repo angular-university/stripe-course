@@ -40,6 +40,15 @@ export class CoursesCardListComponent implements OnInit {
 
   purchaseCourse(course: Course, isLoggedIn: boolean) {
 
+      if (!isLoggedIn) {
+          alert("Please login first.");
+      }
+
+      this.purchaseStarted = true;
+
+
+
+
   }
 
 }
