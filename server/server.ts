@@ -8,7 +8,6 @@ export function initServer() {
 
     const app:Application = express();
 
-
     app.route("/").get((req, res) => {
 
         res.status(200).send("<h1>API is up and running!</h1>");
