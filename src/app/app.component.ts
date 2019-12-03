@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import {AuthInterceptor} from './services/auth.interceptor';
-import {IdTokenService} from './services/id-token.service';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +17,7 @@ export class AppComponent implements OnInit {
     pictureUrl$: Observable<string>;
 
     constructor(
-      private afAuth: AngularFireAuth,
-      private token: IdTokenService /* must initialize this service at app startup */) {
+      private afAuth: AngularFireAuth) {
 
     }
 
