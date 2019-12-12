@@ -5,6 +5,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 interface RequestInfo {
     courseId:string;
+    callbackUrl:string;
 }
 
 export async function createCheckoutSession(req: Request, res: Response) {
@@ -12,7 +13,8 @@ export async function createCheckoutSession(req: Request, res: Response) {
     try {
 
         const info : RequestInfo = {
-            courseId: req.body.courseId
+            courseId: req.body.courseId,
+            callbackUrl: req.body.callbackUrl
         };
 
         console.log("Purchasing course with id: ", info.courseId);
@@ -49,8 +51,8 @@ function setupPurchaseCourseSession(info: RequestInfo) {
 function setupBaseSessionConfig(info: RequestInfo) {
     const config: any = {
         payment_method_types: ['card'],
-        success_url: "",
-        cancel_url: ""
+        success_url: `${info.callbackUrl}/?purchaseResult=success`,
+        cancel_url: `${info.callbackUrl}/?purchaseResult=failed`
     };
 
     return config;

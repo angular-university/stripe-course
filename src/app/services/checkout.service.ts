@@ -13,8 +13,26 @@ export class CheckoutService {
 
     startCourseCheckoutSession(courseId:string) {
         return this.http.post("/api/checkout", {
-            courseId
+            courseId,
+            callbackUrl: this.buildCallbackUrl()
         })
+    }
+
+    buildCallbackUrl() {
+
+        const protocol = window.location.protocol,
+            hostName = window.location.hostname,
+            port = window.location.port;
+
+        let callBackUrl = `${protocol}//${hostName}`;
+
+        if (port) {
+            callBackUrl += port;
+        }
+
+        callBackUrl+= "/stripe-checkout";
+
+        return callBackUrl;
     }
 
 }
