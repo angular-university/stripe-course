@@ -22,6 +22,9 @@ export async function createCheckoutSession(req: Request, res: Response) {
         let sessionConfig;
 
         if (info.courseId) {
+
+
+
             sessionConfig = setupPurchaseCourseSession(info);
         }
 
