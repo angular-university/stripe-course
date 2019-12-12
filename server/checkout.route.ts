@@ -25,10 +25,11 @@ export async function createCheckoutSession(req: Request, res: Response) {
             sessionConfig = setupPurchaseCourseSession(info);
         }
 
+        console.log(sessionConfig);
 
         const session = await stripe.checkout.sessions.create(sessionConfig);
 
-
+        console.log(session);
 
         res.status(200).send();
 
@@ -41,9 +42,16 @@ export async function createCheckoutSession(req: Request, res: Response) {
 }
 
 function setupPurchaseCourseSession(info: RequestInfo) {
-
     const config = setupBaseSessionConfig(info);
-
+    config.line_items = [
+        {
+            name: 'Stripe Payments In Practice',
+            description: 'Build your own ecommerce store & membership website with Firebase, Stripe and Express',
+            amount: 5000,
+            currency: 'usd',
+            quantity: 1
+        }
+    ];
     return config;
 }
 
