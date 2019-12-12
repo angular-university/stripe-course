@@ -65,7 +65,8 @@ function setupBaseSessionConfig(info: RequestInfo) {
     const config: any = {
         payment_method_types: ['card'],
         success_url: `${info.callbackUrl}/?purchaseResult=success`,
-        cancel_url: `${info.callbackUrl}/?purchaseResult=failed`
+        cancel_url: `${info.callbackUrl}/?purchaseResult=failed`,
+        client_reference_id: ""
     };
 
     return config;
