@@ -1,30 +1,43 @@
+import {Request, Response} from 'express';
+import {db, getDocData} from './database';
+import {Timestamp} from '@google-cloud/firestore';
 
-import {Request, Response} from "express";
-import {getDocData} from './database';
-
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 interface RequestInfo {
-    courseId:string;
-    callbackUrl:string;
+    courseId: string;
+    callbackUrl: string;
 }
 
 export async function createCheckoutSession(req: Request, res: Response) {
 
     try {
 
-        const info : RequestInfo = {
+        const info: RequestInfo = {
             courseId: req.body.courseId,
             callbackUrl: req.body.callbackUrl
         };
 
-        console.log("Purchasing course with id: ", info.courseId);
+        console.log('Purchasing course with id: ', info.courseId);
+
+        const purchaseSession = await db.collection('purchaseSessions').doc();
+
+        const checkoutSessionData: any = {
+            status: 'ongoing',
+            created: Timestamp.now()
+        };
+
+        if (info.courseId) {
+            checkoutSessionData.courseId = info.courseId;
+        }
+
+        await purchaseSession.set(checkoutSessionData);
 
         let sessionConfig;
 
         if (info.courseId) {
             const course = await getDocData(`courses/${info.courseId}`);
-            sessionConfig = setupPurchaseCourseSession(info, course);
+            sessionConfig = setupPurchaseCourseSession(info, course, purchaseSession.id);
         }
 
         console.log(sessionConfig);
@@ -38,16 +51,15 @@ export async function createCheckoutSession(req: Request, res: Response) {
             stripePublicKey: process.env.STRIPE_PUBLIC_KEY
         });
 
-    }
-    catch(error) {
+    } catch (error) {
         console.log('Unexpected error occurred while purchasing course: ', error);
-        res.status(500).json({error: "Could not initiate Stripe checkout session"});
+        res.status(500).json({error: 'Could not initiate Stripe checkout session'});
     }
 
 }
 
-function setupPurchaseCourseSession(info: RequestInfo, course) {
-    const config = setupBaseSessionConfig(info);
+function setupPurchaseCourseSession(info: RequestInfo, course, sessionId: string) {
+    const config = setupBaseSessionConfig(info, sessionId);
     config.line_items = [
         {
             name: course.titles.description,
@@ -61,12 +73,12 @@ function setupPurchaseCourseSession(info: RequestInfo, course) {
 }
 
 
-function setupBaseSessionConfig(info: RequestInfo) {
+function setupBaseSessionConfig(info: RequestInfo, sessionId: string) {
     const config: any = {
         payment_method_types: ['card'],
         success_url: `${info.callbackUrl}/?purchaseResult=success`,
         cancel_url: `${info.callbackUrl}/?purchaseResult=failed`,
-        client_reference_id: ""
+        client_reference_id: sessionId
     };
 
     return config;
