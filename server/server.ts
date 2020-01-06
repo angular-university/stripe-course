@@ -2,6 +2,7 @@
 import * as express from 'express';
 import {Application} from "express";
 import {createCheckoutSession} from './checkout.route';
+import {getUserMiddleware} from './get-user.middleware';
 
 
 
@@ -16,7 +17,7 @@ export function initServer() {
     });
 
     app.route("/api/checkout").post(
-        bodyParser.json(), createCheckoutSession);
+        bodyParser.json(), getUserMiddleware, createCheckoutSession);
 
     const PORT = process.env.PORT || 9000;
 
