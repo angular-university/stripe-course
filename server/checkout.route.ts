@@ -7,6 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 interface RequestInfo {
     courseId: string;
     callbackUrl: string;
+    userId:string;
 }
 
 export async function createCheckoutSession(req: Request, res: Response) {
@@ -15,10 +16,11 @@ export async function createCheckoutSession(req: Request, res: Response) {
 
         const info: RequestInfo = {
             courseId: req.body.courseId,
-            callbackUrl: req.body.callbackUrl
+            callbackUrl: req.body.callbackUrl,
+            userId: req["uid"]
         };
 
-        console.log('Purchasing course with id: ', info.courseId);
+        console.log('Purchasing course with id: ', info);
 
         const purchaseSession = await db.collection('purchaseSessions').doc();
 
