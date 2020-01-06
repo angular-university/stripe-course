@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 private router:Router,
                 private ngZone: NgZone) {
 
+
     }
 
     ngOnInit() {
