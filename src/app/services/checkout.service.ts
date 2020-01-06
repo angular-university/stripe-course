@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CheckoutSession} from '../model/checkout-session.model';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 declare const Stripe;
 
@@ -11,15 +12,23 @@ declare const Stripe;
 })
 export class CheckoutService {
 
-    constructor(private http:HttpClient) {
+    private jwtAuth:string;
+
+    constructor(private http:HttpClient,
+                private afAuth: AngularFireAuth) {
+
+        afAuth.idToken.subscribe(jwt => this.jwtAuth = jwt);
 
     }
 
     startCourseCheckoutSession(courseId:string): Observable<CheckoutSession> {
+
+        const headers = new HttpHeaders().set("Authorization", this.jwtAuth);
+
         return this.http.post<CheckoutSession>("/api/checkout", {
             courseId,
             callbackUrl: this.buildCallbackUrl()
-        })
+        }, {headers})
     }
 
     buildCallbackUrl() {
