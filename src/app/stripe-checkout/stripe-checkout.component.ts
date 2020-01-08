@@ -20,6 +20,18 @@ export class StripeCheckoutComponent implements OnInit {
 
   ngOnInit() {
 
+      const result = this.route.snapshot.queryParamMap.get("purchaseResult");
+
+      if (result == "success") {
+
+      }
+      else {
+          this.waiting = false;
+          this.message =  "Purchase CANCELED or FAILED, redirecting...";
+          setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
+      }
+
+
   }
 
 }
