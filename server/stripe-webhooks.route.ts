@@ -1,5 +1,6 @@
 
 import {Request, Response} from 'express';
+import {db, getDocData} from './database';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -15,7 +16,8 @@ export async function stripeWebhooks(req: Request, res:Response) {
 
         if (event.type == "checkout.session.completed") {
             const session = event.data.object;
-            console.log(session);
+            await onCheckoutSessionCompleted(session);
+
         }
 
         res.json({received:true});
@@ -26,3 +28,55 @@ export async function stripeWebhooks(req: Request, res:Response) {
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 }
+
+
+async function onCheckoutSessionCompleted(session) {
+
+    const purchaseSessionId = session.client_reference_id;
+
+    const {userId, courseId} = await getDocData(`purchaseSessions/${purchaseSessionId}`);
+
+    if (courseId) {
+        await fulfillCoursePurchase(userId, courseId, purchaseSessionId);
+    }
+}
+
+async function fulfillCoursePurchase(userId:string, courseId:string,
+                                     purchaseSessionId:string) {
+
+    const batch = db.batch();
+
+    const purchaseSessionRef = db.doc(`purchaseSessions/${purchaseSessionId}`);
+
+    batch.update(purchaseSessionRef, {status: "completed"});
+
+    const userCoursesOwnedRef = db.doc(`users/${userId}/coursesOwned/${courseId}`);
+
+    batch.create(userCoursesOwnedRef, {});
+
+    return batch.commit();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

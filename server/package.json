@@ -13,7 +13,7 @@
     "server": "run-s clean copy start:local",
     "deploy:prod": "gcloud app deploy",
     "build-and-deploy:prod": "run-s clean build copy deploy:prod",
-    "webhooks:listen": "stripe listen --forward-to localhost:9000/stripe-webhooks"
+    "webhooks": "stripe listen --forward-to localhost:9000/stripe-webhooks"
   },
   "dependencies": {
     "@google-cloud/firestore": "^2.6.0",
