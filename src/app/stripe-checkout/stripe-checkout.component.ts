@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {CheckoutService} from '../services/checkout.service';
 
 @Component({
   selector: 'stripe-checkout',
@@ -14,7 +15,8 @@ export class StripeCheckoutComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private checkout: CheckoutService) {
 
   }
 
@@ -23,6 +25,16 @@ export class StripeCheckoutComponent implements OnInit {
       const result = this.route.snapshot.queryParamMap.get("purchaseResult");
 
       if (result == "success") {
+
+          const ongoingPurchaseSessionId = this.route.snapshot.queryParamMap.get("ongoingPurchaseSessionId");
+
+          this.checkout.waitForPurchaseCompleted(ongoingPurchaseSessionId)
+              .subscribe(
+                  () => {
+                      this.waiting = false;
+                      this.message = "Purchase SUCCESSFUL, redirecting...";
+                      setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
+                  })
 
       }
       else {
