@@ -37,12 +37,13 @@ async function onCheckoutSessionCompleted(session) {
     const {userId, courseId} = await getDocData(`purchaseSessions/${purchaseSessionId}`);
 
     if (courseId) {
-        await fulfillCoursePurchase(userId, courseId, purchaseSessionId);
+        await fulfillCoursePurchase(userId, courseId, purchaseSessionId, session.customer);
     }
 }
 
 async function fulfillCoursePurchase(userId:string, courseId:string,
-                                     purchaseSessionId:string) {
+                                     purchaseSessionId:string,
+                                     stripeCustomerId:string) {
 
     const batch = db.batch();
 
@@ -53,6 +54,10 @@ async function fulfillCoursePurchase(userId:string, courseId:string,
     const userCoursesOwnedRef = db.doc(`users/${userId}/coursesOwned/${courseId}`);
 
     batch.create(userCoursesOwnedRef, {});
+
+    const userRef = db.doc(`users/${userId}`);
+
+    batch.set(userRef, {stripeCustomerId}, {merge: true});
 
     return batch.commit();
 

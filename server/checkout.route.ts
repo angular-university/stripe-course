@@ -41,11 +41,14 @@ export async function createCheckoutSession(req: Request, res: Response) {
 
         await purchaseSession.set(checkoutSessionData);
 
+        const user = await getDocData(`users/${info.userId}`);
+
         let sessionConfig;
 
         if (info.courseId) {
             const course = await getDocData(`courses/${info.courseId}`);
-            sessionConfig = setupPurchaseCourseSession(info, course, purchaseSession.id);
+            sessionConfig = setupPurchaseCourseSession(info, course,
+                purchaseSession.id, user ? user.stripeCustomerId : undefined);
         }
 
         console.log(sessionConfig);
@@ -64,8 +67,9 @@ export async function createCheckoutSession(req: Request, res: Response) {
 
 }
 
-function setupPurchaseCourseSession(info: RequestInfo, course, sessionId: string) {
-    const config = setupBaseSessionConfig(info, sessionId);
+function setupPurchaseCourseSession(info: RequestInfo, course, sessionId: string,
+                                    stripeCustomerId:string) {
+    const config = setupBaseSessionConfig(info, sessionId, stripeCustomerId);
     config.line_items = [
         {
             name: course.titles.description,
@@ -79,13 +83,18 @@ function setupPurchaseCourseSession(info: RequestInfo, course, sessionId: string
 }
 
 
-function setupBaseSessionConfig(info: RequestInfo, sessionId: string) {
+function setupBaseSessionConfig(info: RequestInfo, sessionId: string,
+                                stripeCustomerId:string) {
     const config: any = {
         payment_method_types: ['card'],
         success_url: `${info.callbackUrl}/?purchaseResult=success&ongoingPurchaseSessionId=${sessionId}`,
         cancel_url: `${info.callbackUrl}/?purchaseResult=failed`,
         client_reference_id: sessionId
     };
+
+    if (stripeCustomerId) {
+        config.customer = stripeCustomerId;
+    }
 
     return config;
 }
