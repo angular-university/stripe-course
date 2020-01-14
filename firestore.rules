@@ -2,6 +2,34 @@ service cloud.firestore {
 
   match /databases/{database}/documents {
 
+        function userOwnsCourse(userId, courseId) {
+            return exists(/databases/$(database)/documents/users/$(userId)/coursesOwned/$(courseId))
+        }
+
+        function isUserWithId(userId) {
+            return request.auth.uid == userId;
+        }
+
+        match /courses/{courseId} {
+            allow read: if true;
+
+            match /lessons/{lessonId} {
+                allow read: if userOwnsCourse(request.auth.uid,courseId)
+            }
+        }
+
+        match /purchaseSessions/{purchaseId} {
+            allow read: if request.auth.uid == resource.data.userId;
+        }
+
+        match /users/{userId} {
+            allow read: if isUserWithId(userId);
+
+            match /coursesOwned/{courseId} {
+                allow read: if isUserWithId(userId);
+            }
+
+        }
 
   }
 
