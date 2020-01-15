@@ -34,6 +34,16 @@ export class CheckoutService {
         }, {headers})
     }
 
+    startSubscriptionCheckoutSession(pricingPlanId:string): Observable<CheckoutSession> {
+
+        const headers = new HttpHeaders().set("Authorization", this.jwtAuth);
+
+        return this.http.post<CheckoutSession>("/api/checkout", {
+            pricingPlanId,
+            callbackUrl: this.buildCallbackUrl()
+        }, {headers})
+    }
+
     buildCallbackUrl() {
 
         const protocol = window.location.protocol,
