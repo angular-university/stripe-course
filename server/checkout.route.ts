@@ -8,6 +8,7 @@ interface RequestInfo {
     courseId: string;
     callbackUrl: string;
     userId:string;
+    pricingPlanId:string;
 }
 
 export async function createCheckoutSession(req: Request, res: Response) {
@@ -16,6 +17,7 @@ export async function createCheckoutSession(req: Request, res: Response) {
 
         const info: RequestInfo = {
             courseId: req.body.courseId,
+            pricingPlanId: req.body.pricingPlanId,
             callbackUrl: req.body.callbackUrl,
             userId: req["uid"]
         };
@@ -38,17 +40,25 @@ export async function createCheckoutSession(req: Request, res: Response) {
         if (info.courseId) {
             checkoutSessionData.courseId = info.courseId;
         }
+        else {
+            checkoutSessionData.pricingPlanId = info.pricingPlanId;
+        }
 
         await purchaseSession.set(checkoutSessionData);
 
         const user = await getDocData(`users/${info.userId}`);
 
-        let sessionConfig;
+        let sessionConfig,
+            stripeCustomerId = user ? user.stripeCustomerId : undefined;
 
         if (info.courseId) {
             const course = await getDocData(`courses/${info.courseId}`);
             sessionConfig = setupPurchaseCourseSession(info, course,
-                purchaseSession.id, user ? user.stripeCustomerId : undefined);
+                purchaseSession.id, stripeCustomerId);
+        }
+        else if (info.pricingPlanId) {
+            sessionConfig = setupSubscriptionSession(info, purchaseSession.id,
+                stripeCustomerId, info.pricingPlanId);
         }
 
         console.log(sessionConfig);
@@ -65,6 +75,18 @@ export async function createCheckoutSession(req: Request, res: Response) {
         res.status(500).json({error: 'Could not initiate Stripe checkout session'});
     }
 
+}
+
+function setupSubscriptionSession(info: RequestInfo, sessionId: string,stripeCustomerId,
+                                  pricingPlanId) {
+
+    const config = setupBaseSessionConfig(info, sessionId, stripeCustomerId);
+
+    config.subscription_data = {
+      items: [{plan: pricingPlanId}]
+    };
+
+    return config;
 }
 
 function setupPurchaseCourseSession(info: RequestInfo, course, sessionId: string,
