@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CheckoutService} from '../services/checkout.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {CheckoutService} from '../services/checkout.service';
 
 @Component({
   selector: 'stripe-checkout',
@@ -14,33 +14,35 @@ export class StripeCheckoutComponent implements OnInit {
   waiting = true;
 
   constructor(
-    private checkout: CheckoutService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private checkout: CheckoutService) {
 
   }
 
   ngOnInit() {
 
-    const result = this.route.snapshot.queryParamMap.get('purchaseResult');
+      const result = this.route.snapshot.queryParamMap.get("purchaseResult");
 
-    if (result == "success") {
+      if (result == "success") {
 
-      const ongoingPurchaseSessionId = this.route.snapshot.queryParamMap.get('ongoingPurchaseSessionId');
+          const ongoingPurchaseSessionId = this.route.snapshot.queryParamMap.get("ongoingPurchaseSessionId");
 
-      this.checkout.waitForPurchaseToComplete(ongoingPurchaseSessionId)
-        .subscribe(
-          () => {
-            this.waiting = false;
-            this.message = "Purchase SUCCESSFUL, redirecting...";
-            setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
-          });
-    }
-    else {
-      this.waiting = false;
-      this.message = "Purchase CANCELED or FAILED, redirecting...";
-      setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
-    }
+          this.checkout.waitForPurchaseCompleted(ongoingPurchaseSessionId)
+              .subscribe(
+                  () => {
+                      this.waiting = false;
+                      this.message = "Purchase SUCCESSFUL, redirecting...";
+                      setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
+                  })
+
+      }
+      else {
+          this.waiting = false;
+          this.message =  "Purchase CANCELED or FAILED, redirecting...";
+          setTimeout(() => this.router.navigateByUrl("/courses"), 3000);
+      }
+
 
   }
 

@@ -7,6 +7,7 @@ export interface Course {
         longDescription: string;
     };
     iconUrl: string;
+    price:number;
     uploadedImageUrl:string;
     courseListIcon: string;
     categories:string[];

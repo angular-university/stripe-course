@@ -1,15 +1,15 @@
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
-    apiKey: "AIzaSyDYjF_kp3tctLd-7o-OVZ5d8QgdjBA7Eqw",
-    authDomain: "stripe-course-63d30.firebaseapp.com",
-    databaseURL: "https://stripe-course-63d30.firebaseio.com",
-    projectId: "stripe-course-63d30",
-    storageBucket: "stripe-course-63d30.appspot.com",
-    messagingSenderId: "211570590869",
-    appId: "1:211570590869:web:71af776fe9b146c89a079c"
+      apiKey: "AIzaSyBC9AIbgFfJQPKHBgGg7xULHNWjlnW-3vs",
+      authDomain: "stripe-course-recording.firebaseapp.com",
+      databaseURL: "https://stripe-course-recording.firebaseio.com",
+      projectId: "stripe-course-recording",
+      storageBucket: "stripe-course-recording.appspot.com",
+      messagingSenderId: "909700347297",
+      appId: "1:909700347297:web:0e9e7105baf123acdd87e0"
   },
   api: {
-    baseUrl: "https://stripe-course-63d30.appspot.com"
+    baseUrl: "https://stripe-course-recording.appspot.com"
   }
 };

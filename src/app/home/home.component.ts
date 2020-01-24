@@ -48,24 +48,14 @@ export class HomeComponent implements OnInit {
 
 
   subscribeToPlan() {
-
-      this.processingOngoing = true;
-
-    this.checkout.startPurchaseSubscriptionCheckoutSession("monthly")
-      .subscribe(
-        session => this.checkout.redirectToCheckout(session)
-        , err => {
-          console.log("Error creating checkout session", err);
-          this.processingOngoing = false;
-        });
-
-
-
-
-
+        this.checkout.startSubscriptionCheckoutSession("STRIPE_MONTHLY")
+            .subscribe(
+                session => this.checkout.redirectToCheckout(session),
+                err => {
+                    console.log("Error creating checkout session", err);
+                    this.processingOngoing = false;
+                }
+            );
   }
 
-  cancelPlan() {
-
-  }
 }
