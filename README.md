@@ -8,15 +8,16 @@ This repository contains the code of the [Stripe Payments In Practice Course](ht
 
 # Installation pre-requisites
 
-IMPORTANT: Please use NPM 5 or above, to make sure the package-lock.json is used.
+IMPORTANT: Please make sure to use **Node 12** (LTS - Long Term Support) for this course. 
 
-For running this project we need and npm installed on our machine. These are some tutorials to install node in different operating systems:
+You can switch between node versions without having to overwrite your global installation by using a tool like [nave](https://www.npmjs.com/package/nave).
 
-*Its important to install the latest version of Node*
-
-- [Install Node and NPM on Windows](https://www.youtube.com/watch?v=8ODS6RM6x7g)
-- [Install Node and NPM on Linux](https://www.youtube.com/watch?v=yUdHk-Dk_BY)
-- [Install Node and NPM on Mac](https://www.youtube.com/watch?v=Imj8PgG3bZU)
+    npm install -g nave
+    
+    nave use 12.3.1
+    
+    node -v
+    12.3.1
 
 
 # Installing the Angular CLI
